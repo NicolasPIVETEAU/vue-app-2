@@ -1,6 +1,5 @@
 <template>
   <div id="mapContainer" class="basemap">
-
   </div>
 </template>
 
@@ -13,16 +12,19 @@ import axios from 'axios';
 
 
 export default {
+
   name: "BaseMap",
   data() {
     return {
       accessToken: 'pk.eyJ1IjoiemVzcG9uZ2Vib2IiLCJhIjoiY2ttM2N1OWxuM2ZldDJwcDNnaDh4dzk2YiJ9.ju6b_0a6hrtytFtjqN1f_A',
     };
   },
+
   async mounted() {
+
     mapboxgl.accessToken = this.accessToken;
 
-    let countries = ["Paris", "london", "inde", "rome","berlin", "canada", "moscow", "madrid", "Salvador", "brasilia",
+    const countries = ["Paris", "london", "inde", "rome","berlin", "calgary", "moscow", "madrid", "Salvador", "brasilia",
        "bern", "ankara", "iran", "varsovie", "pekin", "sidney", "bangkok"]
 
 
@@ -47,7 +49,7 @@ export default {
 
     for (const country of countries) {
       let data = [];
-      const response = await axios.get(`https://api.waqi.info/feed/${country}/?token=ad62ba964a0eb5292ce0f5cc1c3ed90873b0d757`).then(response => data = response.data.data)
+     const response = await axios.get(`https://api.waqi.info/feed/${country}/?token=ad62ba964a0eb5292ce0f5cc1c3ed90873b0d757`).then(response => data = response.data.data)
 
       console.log(data.aqi)
 
@@ -72,16 +74,21 @@ export default {
         description = "Danger"
       }
 
+      var test = 'paris';
+
       var popup = new mapboxgl.Popup({closeOnClick: false})
           .setLngLat(data.city.geo.reverse())
-          .setHTML(`<a href="/about" style="text-decoration: none"><div style='padding: 3px; background-color: ${coloration};color: ${colorationTitle};max-width:100px; min-width: 50px;text-align:center;'><small>${country.toUpperCase()}</small> <div style='font-size:15px;height:20px;padding-top:2px;'>${data.aqi}</div>${description}</div></a>`)
+          .setHTML(`<a href="/#/details?villeInfo=${country}" style="text-decoration: none"><div style='padding: 3px; background-color: ${coloration};color: ${colorationTitle};max-width:100px; min-width: 50px;text-align:center;'><small>${country.toUpperCase()}</small> <div style='font-size:15px;height:20px;padding-top:2px;'>${data.aqi}</div>${description}</div></a>`)
+          //.setHTML(`<a @click="testRouter" style="text-decoration: none"><div style='padding: 3px; background-color: ${coloration};color: ${colorationTitle};max-width:100px; min-width: 50px;text-align:center;'><small>${country.toUpperCase()}</small> <div style='font-size:15px;height:20px;padding-top:2px;'>${data.aqi}</div>${description}</div></a>`)
           .addTo(map);
     }
-
-
-
   },
+  methods: {
+
+  }
 };
+
+
 </script>
 
 <style scoped>
