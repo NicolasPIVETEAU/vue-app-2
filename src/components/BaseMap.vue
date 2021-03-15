@@ -49,7 +49,11 @@ export default {
 
     for (const country of countries) {
       let data = [];
-     const response = await axios.get(`https://api.waqi.info/feed/${country}/?token=ad62ba964a0eb5292ce0f5cc1c3ed90873b0d757`).then(response => data = response.data.data)
+
+      await axios.get(`https://api.waqi.info/feed/${country}/?token=ad62ba964a0eb5292ce0f5cc1c3ed90873b0d757`, {
+        method: 'GET',
+        mode: 'no-cors'
+      }).then(response => data = response.data.data)
 
       console.log(data.aqi)
 
